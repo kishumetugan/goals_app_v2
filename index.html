@@ -1,59 +1,26 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-    
-    <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="theme-color" content="#0f0c29"/>
-    
-    <title>לוח המטרות</title>
-
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    
-    <link rel="stylesheet" href="style.css"/>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(reg => {
-                        console.log('Service Worker registered!');
-                        // בדיקה אם יש עדכון מחכה
-                        reg.onupdatefound = () => {
-                            const installingWorker = reg.installing;
-                            installingWorker.onstatechange = () => {
-                                if (installingWorker.state === 'installed') {
-                                    if (navigator.serviceWorker.controller) {
-                                        console.log('New content is available; please refresh.');
-                                    }
-                                }
-                            };
-                        };
-                    })
-                    .catch(err => console.log('Service Worker registration failed: ', err));
-            });
-        }
-    </script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#0f0c29"/>
+<link rel="manifest" href="manifest.json"/>
+<title>לוח המטרות</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
-
 <body>
+<div id="root"><div class="shell" id="shell"></div></div>
+<div id="bg-layer" style="position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,#0f0c29,#302b63,#24243e)"></div>
 
-    <div id="root">
-        <div class="shell" id="shell"></div>
-    </div>
+<input type="file" id="cameraInput" accept="image/*" capture="environment"/>
+<input type="file" id="galleryInput" accept="image/*"/>
+<input type="file" id="txtInput" accept=".txt"/>
+<input type="file" id="fnpInput" accept=".txt,.fnp,.npa"/>
+<input type="file" id="backupInput" accept=".json"/>
 
-    <div id="bg-layer" style="position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,#0f0c29,#302b63,#24243e)"></div>
-
-    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;"/>
-    <input type="file" id="txtInput" accept=".txt" style="display:none;"/>
-    <input type="file" id="fnpInput" accept=".txt,.fnp,.npa" style="display:none;"/>
-    <input type="file" id="backupInput" accept=".json" style="display:none;"/>
-
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
