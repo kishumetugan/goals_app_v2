@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nahal-jewelry-v3'; // שינוי השם כאן מכריח עדכון
+const CACHE_NAME = 'goals-app-v4';
 const ASSETS = [
   '/',
   '/index.html',
@@ -9,29 +9,22 @@ const ASSETS = [
   '/icon-512.png'
 ];
 
-// התקנה וקאשינג של קבצים
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
-  self.skipWaiting(); // מכריח את ה-SW החדש להיכנס לפעולה מיד
+  self.skipWaiting();
 });
 
-// מחיקת קאש ישן
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      );
-    })
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
+    )
   );
   self.clients.claim();
 });
 
-// שליפת קבצים (עבודה ב-Offline)
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
